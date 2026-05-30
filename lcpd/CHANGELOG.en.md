@@ -5,6 +5,18 @@
 All notable changes to [Yuanx1a0/phpbb-ext-lcpd](https://github.com/Yuanx1a0/phpbb-ext-lcpd) are documented here.  
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows [Semantic Versioning](https://semver.org/).
 
+## [1.0.12] - 2026-05-30
+
+### Changed
+
+- UCP display toggles: large visible checkboxes, **ON/OFF** status badges, highlighted selected rows, larger text; inline CSS so themes cannot hide controls.
+
+## [1.0.11] - 2026-05-30
+
+### Changed
+
+- **UCP badge settings** UI redesigned: card layout, toggle switches, styled ribbon sort list and badge number field.
+
 ## [1.0.10] - 2026-05-30
 
 ### Added

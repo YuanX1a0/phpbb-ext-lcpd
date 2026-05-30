@@ -3,7 +3,7 @@
     "type": "phpbb-extension",
     "description": "phpBB 3.3 扩展：LSPD 论坛徽章（盾牌、略章、名牌）显示系统",
     "homepage": "https://github.com/Yuanx1a0/phpbb-ext-lcpd",
-    "version": "1.0.10",
+    "version": "1.0.13",
     "time": "2026-05-30",
     "license": "GPL-2.0-only",
     "authors": [

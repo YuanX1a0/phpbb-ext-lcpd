@@ -1,78 +1,166 @@
-<!-- IF S_LCPD_HAS_UCP_DISPLAY -->
-<dl>
-	<dt>{L_UCP_LCPD_DISPLAY}{L_COLON}<br /><span>{L_UCP_LCPD_DISPLAY_EXPLAIN}</span></dt>
-	<dd>
-		<!-- IF S_LCPD_UCP_HAS_SHIELD -->
-		<label for="user_lcpd_show_shield">
-			<input type="checkbox" name="user_lcpd_show_shield" id="user_lcpd_show_shield" value="1"<!-- IF USER_LCPD_SHOW_SHIELD --> checked="checked"<!-- ENDIF --> /> {L_UCP_LCPD_SHOW_SHIELD}
-		</label><br />
-		<!-- ENDIF -->
-		<!-- IF S_LCPD_UCP_HAS_RIBBONS -->
-		<label for="user_lcpd_show_ribbons">
-			<input type="checkbox" name="user_lcpd_show_ribbons" id="user_lcpd_show_ribbons" value="1"<!-- IF USER_LCPD_SHOW_RIBBONS --> checked="checked"<!-- ENDIF --> /> {L_UCP_LCPD_SHOW_RIBBONS}
-		</label><br />
-		<!-- ENDIF -->
-		<!-- IF S_LCPD_UCP_HAS_NAMEBAR -->
-		<label for="user_lcpd_show_namebar">
-			<input type="checkbox" name="user_lcpd_show_namebar" id="user_lcpd_show_namebar" value="1"<!-- IF USER_LCPD_SHOW_NAMEBAR --> checked="checked"<!-- ENDIF --> /> {L_UCP_LCPD_SHOW_NAMEBAR}
-		</label>
-		<!-- ENDIF -->
-	</dd>
-</dl>
-<!-- ENDIF -->
+<style>
+.lcpd-ucp-section dt,.lcpd-ucp-section dd{float:none!important;width:auto!important;margin-left:0!important;padding:0!important;font-size:13px!important;line-height:1.45!important}
+.lcpd-ucp-section-title{display:block!important;font-size:15px!important;font-weight:700!important;color:#22255B!important;margin-bottom:4px!important}
+.lcpd-ucp-section-desc{display:block!important;font-size:12px!important;color:#555!important;line-height:1.45!important;margin-bottom:6px!important}
+.lcpd-ucp-panel{box-sizing:border-box;max-width:400px;padding:12px 14px;background:#f6f8fc;border:1px solid #d0d8ea;border-radius:8px;font-size:13px!important}
+.lcpd-ucp-block+.lcpd-ucp-block{margin-top:12px;padding-top:12px;border-top:1px solid #e0e5ef}
+.lcpd-ucp-block-title{margin:0 0 4px!important;font-size:13px!important;font-weight:700!important;color:#1a2540!important}
+.lcpd-ucp-block-hint{margin:0 0 8px!important;font-size:12px!important;line-height:1.45!important;color:#666!important}
+.lcpd-ucp-choices{display:flex;flex-direction:column;gap:6px}
+.lcpd-ucp-option{display:flex!important;align-items:center!important;gap:8px!important;margin:0!important;padding:8px 10px!important;background:#fff!important;border:1px solid #c5cde0!important;border-radius:6px!important;cursor:pointer!important;font-size:13px!important;line-height:1.35!important}
+.lcpd-ucp-option:hover{border-color:#8fa3cc!important}
+.lcpd-ucp-option--on{background:#e8eef9!important;border-color:#22255B!important}
+.lcpd-ucp-cb{display:inline-block!important;visibility:visible!important;opacity:1!important;position:static!important;width:16px!important;height:16px!important;min-width:16px!important;margin:0!important;padding:0!important;clip:auto!important;appearance:auto!important;-webkit-appearance:checkbox!important;accent-color:#22255B!important;cursor:pointer!important;flex-shrink:0!important}
+.lcpd-ucp-option-label{flex:1!important;font-size:13px!important;font-weight:600!important;color:#333!important}
+.lcpd-ucp-option-badge{display:inline-block!important;min-width:52px!important;padding:3px 8px!important;font-size:11px!important;font-weight:700!important;text-align:center!important;border-radius:10px!important;background:#e8e8e8!important;color:#666!important}
+.lcpd-ucp-option--on .lcpd-ucp-option-badge{background:#22255B!important;color:#fff!important}
+.lcpd-ucp-input{box-sizing:border-box;width:100%;max-width:200px;padding:6px 10px!important;font-size:13px!important;border:1px solid #b8c4dc!important;border-radius:5px!important}
+.lcpd-ucp-ribbon-list{list-style:none;margin:0;padding:0}
+.lcpd-ucp-ribbon-row{display:flex;align-items:center;gap:8px;margin:0 0 6px;padding:8px 10px;background:#fff;border:1px solid #d0d8ea;border-radius:6px;font-size:13px!important}
+.lcpd-ucp-ribbon-order{min-width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;background:#22255B;border-radius:12px}
+.lcpd-ucp-ribbon-name{flex:1;font-size:13px;font-weight:600;color:#333}
+.lcpd-ucp-ribbon-actions{display:flex;gap:4px}
+.lcpd-ucp-btn{width:28px!important;height:28px!important;font-size:12px!important;font-weight:700!important;color:#22255B!important;background:#eef2fa!important;border:1px solid #b8c4dc!important;border-radius:5px!important;cursor:pointer!important;padding:0!important}
+.lcpd-ucp-btn:hover{background:#22255B!important;color:#fff!important;border-color:#22255B!important}
+</style>
 
-<dl>
-	<dt><label for="user_lcpd_badge_number">{L_UCP_LCPD_BADGE_NUMBER}{L_COLON}</label><br /><span>{L_UCP_LCPD_BADGE_NUMBER_EXPLAIN}</span></dt>
-	<dd><input type="text" name="user_lcpd_badge_number" id="user_lcpd_badge_number" maxlength="64" value="{USER_LCPD_BADGE_NUMBER}" class="inputbox" /></dd>
-</dl>
-
-<!-- IF S_LCPD_HAS_UCP_RIBBONS -->
-<dl>
-	<dt><label>{L_UCP_LCPD_RIBBON_ORDER}{L_COLON}</label><br /><span>{L_UCP_LCPD_RIBBON_ORDER_EXPLAIN}</span></dt>
+<dl class="lcpd-ucp-section">
+	<dt>
+		<span class="lcpd-ucp-section-title">{L_UCP_LCPD_SECTION_TITLE}</span>
+		<span class="lcpd-ucp-section-desc">{L_UCP_LCPD_SECTION_EXPLAIN}</span>
+	</dt>
 	<dd>
-		<ol id="lcpd-ucp-ribbon-sort" class="lcpd-ucp-ribbon-sort">
-			<!-- BEGIN lcpd_ucp_ribbons -->
-			<li class="lcpd-ucp-ribbon-item">
-				<input type="hidden" name="user_lcpd_ribbon_ids[]" value="{lcpd_ucp_ribbons.ID}" />
-				<span class="lcpd-ucp-ribbon-name">{lcpd_ucp_ribbons.NAME}</span>
-				<span class="lcpd-ucp-ribbon-actions">
-					<input type="button" class="button2 lcpd-ribbon-up" value="{L_UCP_LCPD_RIBBON_MOVE_UP}" />
-					<input type="button" class="button2 lcpd-ribbon-down" value="{L_UCP_LCPD_RIBBON_MOVE_DOWN}" />
-				</span>
-			</li>
-			<!-- END lcpd_ucp_ribbons -->
-		</ol>
+		<div class="lcpd-ucp-panel">
+
+			<!-- IF S_LCPD_HAS_UCP_DISPLAY -->
+			<div class="lcpd-ucp-block">
+				<h4 class="lcpd-ucp-block-title">{L_UCP_LCPD_DISPLAY}</h4>
+				<p class="lcpd-ucp-block-hint">{L_UCP_LCPD_DISPLAY_EXPLAIN}</p>
+				<div class="lcpd-ucp-choices" id="lcpd-ucp-choices">
+					<!-- IF S_LCPD_UCP_HAS_SHIELD -->
+					<label class="lcpd-ucp-option" for="user_lcpd_show_shield">
+						<input type="checkbox" class="lcpd-ucp-cb" name="user_lcpd_show_shield" id="user_lcpd_show_shield" value="1"<!-- IF USER_LCPD_SHOW_SHIELD --> checked="checked"<!-- ENDIF --> />
+						<span class="lcpd-ucp-option-label">{L_UCP_LCPD_SHOW_SHIELD}</span>
+						<span class="lcpd-ucp-option-badge" data-on="{L_UCP_LCPD_STATUS_ON}" data-off="{L_UCP_LCPD_STATUS_OFF}"></span>
+					</label>
+					<!-- ENDIF -->
+					<!-- IF S_LCPD_UCP_HAS_RIBBONS -->
+					<label class="lcpd-ucp-option" for="user_lcpd_show_ribbons">
+						<input type="checkbox" class="lcpd-ucp-cb" name="user_lcpd_show_ribbons" id="user_lcpd_show_ribbons" value="1"<!-- IF USER_LCPD_SHOW_RIBBONS --> checked="checked"<!-- ENDIF --> />
+						<span class="lcpd-ucp-option-label">{L_UCP_LCPD_SHOW_RIBBONS}</span>
+						<span class="lcpd-ucp-option-badge" data-on="{L_UCP_LCPD_STATUS_ON}" data-off="{L_UCP_LCPD_STATUS_OFF}"></span>
+					</label>
+					<!-- ENDIF -->
+					<!-- IF S_LCPD_UCP_HAS_NAMEBAR -->
+					<label class="lcpd-ucp-option" for="user_lcpd_show_namebar">
+						<input type="checkbox" class="lcpd-ucp-cb" name="user_lcpd_show_namebar" id="user_lcpd_show_namebar" value="1"<!-- IF USER_LCPD_SHOW_NAMEBAR --> checked="checked"<!-- ENDIF --> />
+						<span class="lcpd-ucp-option-label">{L_UCP_LCPD_SHOW_NAMEBAR}</span>
+						<span class="lcpd-ucp-option-badge" data-on="{L_UCP_LCPD_STATUS_ON}" data-off="{L_UCP_LCPD_STATUS_OFF}"></span>
+					</label>
+					<!-- ENDIF -->
+				</div>
+			</div>
+			<!-- ENDIF -->
+
+			<div class="lcpd-ucp-block">
+				<h4 class="lcpd-ucp-block-title"><label for="user_lcpd_badge_number">{L_UCP_LCPD_BADGE_NUMBER}</label></h4>
+				<p class="lcpd-ucp-block-hint">{L_UCP_LCPD_BADGE_NUMBER_EXPLAIN}</p>
+				<input type="text" name="user_lcpd_badge_number" id="user_lcpd_badge_number" maxlength="64" value="{USER_LCPD_BADGE_NUMBER}" class="inputbox lcpd-ucp-input" placeholder="{L_UCP_LCPD_BADGE_NUMBER_PLACEHOLDER}" />
+			</div>
+
+			<!-- IF S_LCPD_HAS_UCP_RIBBONS -->
+			<div class="lcpd-ucp-block">
+				<h4 class="lcpd-ucp-block-title">{L_UCP_LCPD_RIBBON_ORDER}</h4>
+				<p class="lcpd-ucp-block-hint">{L_UCP_LCPD_RIBBON_ORDER_EXPLAIN}</p>
+				<ul id="lcpd-ucp-ribbon-sort" class="lcpd-ucp-ribbon-list">
+					<!-- BEGIN lcpd_ucp_ribbons -->
+					<li class="lcpd-ucp-ribbon-row">
+						<input type="hidden" name="user_lcpd_ribbon_ids[]" value="{lcpd_ucp_ribbons.ID}" />
+						<span class="lcpd-ucp-ribbon-order">{lcpd_ucp_ribbons.POSITION}</span>
+						<span class="lcpd-ucp-ribbon-name">{lcpd_ucp_ribbons.NAME}</span>
+						<span class="lcpd-ucp-ribbon-actions">
+							<button type="button" class="lcpd-ucp-btn lcpd-ribbon-up" title="{L_UCP_LCPD_RIBBON_MOVE_UP}" aria-label="{L_UCP_LCPD_RIBBON_MOVE_UP}">&#9650;</button>
+							<button type="button" class="lcpd-ucp-btn lcpd-ribbon-down" title="{L_UCP_LCPD_RIBBON_MOVE_DOWN}" aria-label="{L_UCP_LCPD_RIBBON_MOVE_DOWN}">&#9660;</button>
+						</span>
+					</li>
+					<!-- END lcpd_ucp_ribbons -->
+				</ul>
+			</div>
+			<!-- ENDIF -->
+
+		</div>
 	</dd>
 </dl>
 
 <script>
 (function() {
+	function syncLcpdUcpOptions() {
+		var options = document.querySelectorAll('.lcpd-ucp-option');
+		for (var i = 0; i < options.length; i++) {
+			var label = options[i];
+			var cb = label.querySelector('.lcpd-ucp-cb');
+			var badge = label.querySelector('.lcpd-ucp-option-badge');
+			if (!cb || !badge) {
+				continue;
+			}
+			var onText = badge.getAttribute('data-on') || 'ON';
+			var offText = badge.getAttribute('data-off') || 'OFF';
+			if (cb.checked) {
+				label.className = 'lcpd-ucp-option lcpd-ucp-option--on';
+				badge.textContent = onText;
+			} else {
+				label.className = 'lcpd-ucp-option';
+				badge.textContent = offText;
+			}
+		}
+	}
+
+	var choices = document.getElementById('lcpd-ucp-choices');
+	if (choices) {
+		var inputs = choices.querySelectorAll('.lcpd-ucp-cb');
+		for (var j = 0; j < inputs.length; j++) {
+			inputs[j].addEventListener('change', syncLcpdUcpOptions);
+		}
+		syncLcpdUcpOptions();
+	}
+
 	var list = document.getElementById('lcpd-ucp-ribbon-sort');
-	if (!list) { return; }
+	if (!list) {
+		return;
+	}
+
+	function refreshOrder() {
+		var rows = list.querySelectorAll('.lcpd-ucp-ribbon-row');
+		for (var i = 0; i < rows.length; i++) {
+			var order = rows[i].querySelector('.lcpd-ucp-ribbon-order');
+			if (order) {
+				order.textContent = String(i + 1);
+			}
+		}
+	}
 
 	list.addEventListener('click', function(e) {
-		var target = e.target || e.srcElement;
-		if (!target || !target.className) { return; }
-
-		var item = target.parentNode;
-		while (item && item.className && item.className.indexOf('lcpd-ucp-ribbon-item') === -1) {
-			item = item.parentNode;
+		var btn = e.target.closest ? e.target.closest('.lcpd-ribbon-up, .lcpd-ribbon-down') : null;
+		if (!btn) {
+			return;
 		}
-
-		if (!item) { return; }
-
-		if (target.className.indexOf('lcpd-ribbon-up') !== -1) {
+		var item = btn.closest ? btn.closest('.lcpd-ucp-ribbon-row') : null;
+		if (!item) {
+			return;
+		}
+		if (btn.classList.contains('lcpd-ribbon-up')) {
 			var prev = item.previousElementSibling;
 			if (prev) {
 				list.insertBefore(item, prev);
+				refreshOrder();
 			}
-		} else if (target.className.indexOf('lcpd-ribbon-down') !== -1) {
+		} else if (btn.classList.contains('lcpd-ribbon-down')) {
 			var next = item.nextElementSibling;
 			if (next) {
 				list.insertBefore(next, item);
+				refreshOrder();
 			}
 		}
 	});
 })();
 </script>
-<!-- ENDIF -->

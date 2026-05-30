@@ -73,3 +73,35 @@
 	transform: translate(-50%, -50%) !important;
 	text-align: center !important;
 }
+
+/* UCP profile: keep LCPD panel readable under ravaio */
+.lcpd-ucp-section dt,
+.lcpd-ucp-section dd {
+	float: none !important;
+	width: auto !important;
+	margin-left: 0 !important;
+	font-size: 13px !important;
+}
+
+.lcpd-ucp-section .lcpd-ucp-cb {
+	display: inline-block !important;
+	visibility: visible !important;
+	opacity: 1 !important;
+	position: static !important;
+	width: 16px !important;
+	height: 16px !important;
+	margin: 0 6px 0 0 !important;
+	clip: auto !important;
+	appearance: checkbox !important;
+	-webkit-appearance: checkbox !important;
+}
+
+.lcpd-ucp-option-badge {
+	display: inline-block !important;
+	visibility: visible !important;
+}
+
+.lcpd-ucp-btn {
+	appearance: none;
+	-webkit-appearance: none;
+}

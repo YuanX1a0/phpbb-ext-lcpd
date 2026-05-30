@@ -5,7 +5,7 @@
 phpBB 3.3 extension that displays LSPD-style badges in the post author sidebar: shield (with badge number), ribbons, and namebar (with name).
 
 - **Extension ID:** `siwode/lcpd` (install path must remain `ext/siwode/lcpd`)
-- **Current version:** 1.0.10
+- **Current version:** 1.0.11
 - **License:** [GPL-2.0-only](license.txt)
 
 ## Authors & credits

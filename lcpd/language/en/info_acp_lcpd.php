@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  *
  * LSPD论坛徽章. An extension for the phpBB Forum Software package.
