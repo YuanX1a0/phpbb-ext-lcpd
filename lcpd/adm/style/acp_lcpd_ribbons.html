@@ -1,0 +1,232 @@
+{% include 'overall_header.html' %}
+
+<h1>{{ lang('ACP_LCPD_RIBBON_MODULE') }}</h1>
+
+{% if S_ERROR %}
+	<div class="errorbox">
+		<h3>{{ lang('WARNING') }}</h3>
+		<p>{{ ERROR_MSG }}</p>
+	</div>
+{% endif %}
+
+<form id="siwode_lcpd_ribbons" name="siwode_lcpd_ribbons" method="post" action="{{ U_ACTION }}">
+
+	{# Index view: simple submenu like Shield #}
+	{% if S_LCPD_RIBBONS_VIEW_INDEX %}
+		<fieldset class="tabulated">
+			<legend>{{ lang('ACP_LCPD_RIBBON_MODULE') }}</legend>
+			<table class="table1 zebra-table">
+				<tbody>
+					<tr>
+						<td style="width:5%; text-align:center;"><img src="images/icon_subfolder.gif" alt="" /></td>
+						<td><a href="{{ U_LCPD_RIBBONS_VIEW_CATEGORIES }}">{{ lang('ACP_LCPD_RIBBON_CATEGORY_MANAGE') }}</a><br /><span>{{ lang('ACP_LCPD_RIBBON_CATEGORY_EXPLAIN') }}</span></td>
+					</tr>
+					<tr>
+						<td style="width:5%; text-align:center;"><img src="images/icon_subfolder.gif" alt="" /></td>
+						<td><a href="{{ U_LCPD_RIBBONS_VIEW_MAIN }}">{{ lang('ACP_LCPD_RIBBON_MANAGE') }}</a><br /><span>{{ lang('ACP_LCPD_RIBBON_EXPLAIN') }}</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+	{% endif %}
+
+	{# Categories management view #}
+	{% if S_LCPD_RIBBONS_VIEW_CATEGORIES %}
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_RIBBON_CATEGORY_MANAGE') }}</legend>
+		<p>{{ lang('ACP_LCPD_RIBBON_CATEGORY_EXPLAIN') }}</p>
+
+		<table class="table1 zebra-table" id="ribbon-category-list">
+			<thead>
+				<tr>
+					<th>{{ lang('ACP_LCPD_CATEGORY_NAME') }}</th>
+					<th>{{ lang('ACTIONS') }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for cat in ribbon_categories %}
+				<tr>
+					<td>{{ cat.CATEGORY_NAME }}</td>
+					<td style="text-align: center;">
+						<a href="#" class="lcpd-ribbon-edit-category" data-cat-id="{{ cat.CATEGORY_ID }}" data-cat-name="{{ cat.CATEGORY_NAME }}" title="{{ lang('EDIT') }}">{{ ICON_EDIT }}</a>&nbsp;
+						<button class="button2" type="submit" name="delete_ribbon_category" value="{{ cat.CATEGORY_ID }}" title="{{ lang('DELETE') }}">{{ ICON_DELETE }}</button>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="2">{{ lang('ACP_LCPD_NO_RIBBON_CATEGORIES') }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_ADD_RIBBON_CATEGORY') }}</legend>
+		<dl>
+			<dt><label for="ribbon_category_name">{{ lang('ACP_LCPD_CATEGORY_NAME') ~ lang('COLON') }}</label></dt>
+			<dd><input type="text" id="ribbon_category_name" name="ribbon_category_name" value="{{ RIBBON_CATEGORY_NAME }}" maxlength="255" /></dd>
+		</dl>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="add_ribbon_category" name="add_ribbon_category" value="{{ lang('ACP_LCPD_ADD_RIBBON_CATEGORY') }}" />
+		</p>
+	</fieldset>
+
+	{# Hidden edit-category fields driven by gear icon #}
+	<div style="display:none;">
+		<input type="hidden" id="edit_ribbon_category_id" name="edit_ribbon_category_id" value="" />
+		<input type="hidden" id="edit_ribbon_category_name" name="edit_ribbon_category_name" value="" />
+	</div>
+	<input type="submit" id="lcpd_edit_ribbon_category_submit" name="edit_ribbon_category" value="1" style="display:none;" />
+	{% endif %}
+
+	{# Ribbons list + add view #}
+	{% if S_LCPD_RIBBONS_VIEW_MAIN %}
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_RIBBON_MANAGE') }}</legend>
+		<p>{{ lang('ACP_LCPD_RIBBON_EXPLAIN') }}</p>
+
+		<table class="table1 zebra-table" id="ribbon-list">
+			<thead>
+				<tr>
+					<th>{{ lang('ACP_LCPD_RIBBON_NAME') }}</th>
+					<th>{{ lang('ACP_LCPD_CATEGORY_NAME') }}</th>
+					<th>{{ lang('ACP_LCPD_RIBBON_IMAGE') }}</th>
+					<th>{{ lang('ACTIONS') }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for ribbon in ribbons %}
+				<tr>
+					<td style="text-align: center;">{{ ribbon.RIBBON_NAME }}</td>
+					<td style="text-align: center;">{{ ribbon.CATEGORY_NAME }}</td>
+					<td style="text-align: center;">
+						{% if ribbon.RIBBON_IMAGE %}
+							<img src="{{ ribbon.RIBBON_IMAGE_URL }}" alt="{{ ribbon.RIBBON_NAME }}" style="max-height:32px;" />
+						{% else %}&nbsp;-&nbsp;{% endif %}
+					</td>
+					<td style="text-align: center;">
+						<a href="{{ U_ACTION }}&view=ribbon_edit&edit_ribbon_id={{ ribbon.RIBBON_ID }}#edit-ribbon-form" title="{{ lang('EDIT') }}">{{ ICON_EDIT }}</a>&nbsp;
+						<button class="button2" type="submit" name="delete_ribbon" value="{{ ribbon.RIBBON_ID }}" title="{{ lang('DELETE') }}">{{ ICON_DELETE }}</button>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">{{ lang('ACP_LCPD_NO_RIBBONS') }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_ADD_RIBBON') }}</legend>
+		<dl>
+			<dt><label for="ribbon_name">{{ lang('ACP_LCPD_RIBBON_NAME') ~ lang('COLON') }}</label></dt>
+			<dd><input type="text" id="ribbon_name" name="ribbon_name" value="{{ RIBBON_NAME }}" maxlength="255" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="ribbon_category_id">{{ lang('ACP_LCPD_CATEGORY_NAME') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<select id="ribbon_category_id" name="ribbon_category_id">
+					<option value="">{{ lang('SELECT_OPTION') }}</option>
+					{% for cat in ribbon_categories %}
+						<option value="{{ cat.CATEGORY_ID }}"{% if cat.CATEGORY_ID == RIBBON_CATEGORY_ID %} selected="selected"{% endif %}>{{ cat.CATEGORY_NAME }}</option>
+					{% endfor %}
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="ribbon_image">{{ lang('ACP_LCPD_RIBBON_IMAGE') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<select id="ribbon_image" name="ribbon_image">
+					<option value="">{{ lang('SELECT_OPTION') }}</option>
+					{% for img in ribbon_images %}
+						<option value="{{ img.FILE }}"{% if img.FILE == RIBBON_IMAGE %} selected="selected"{% endif %}>{{ img.FILE }}</option>
+					{% endfor %}
+				</select>
+			</dd>
+		</dl>
+	</fieldset>
+	{% endif %}
+
+	{% if S_LCPD_RIBBONS_VIEW_EDIT %}
+	<fieldset id="edit-ribbon-form">
+		<legend>{{ lang('ACP_LCPD_EDIT_RIBBON') }}</legend>
+		<dl>
+			<dt><label for="edit_ribbon_id">{{ lang('ACP_LCPD_RIBBON_NAME') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<select id="edit_ribbon_id" name="edit_ribbon_id">
+					<option value="">{{ lang('SELECT_OPTION') }}</option>
+					{% for ribbon in ribbons %}
+						<option value="{{ ribbon.RIBBON_ID }}"{% if ribbon.RIBBON_ID == EDIT_RIBBON_ID %} selected="selected"{% endif %}>{{ ribbon.RIBBON_NAME }}</option>
+					{% endfor %}
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="edit_ribbon_name">{{ lang('ACP_LCPD_RIBBON_NAME') ~ lang('COLON') }}</label></dt>
+			<dd><input type="text" id="edit_ribbon_name" name="edit_ribbon_name" value="{{ EDIT_RIBBON_NAME }}" maxlength="255" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="edit_ribbon_image">{{ lang('ACP_LCPD_RIBBON_IMAGE') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<select id="edit_ribbon_image" name="edit_ribbon_image">
+					<option value="">{{ lang('SELECT_OPTION') }}</option>
+					{% for img in ribbon_images %}
+						<option value="{{ img.FILE }}"{% if img.FILE == EDIT_RIBBON_IMAGE %} selected="selected"{% endif %}>{{ img.FILE }}</option>
+					{% endfor %}
+				</select>
+			</dd>
+		</dl>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" name="edit_ribbon" value="{{ lang('ACP_LCPD_EDIT_RIBBON') }}" />
+		</p>
+	</fieldset>
+	{% endif %}
+
+	<fieldset class="submit-buttons">
+		{% if S_LCPD_RIBBONS_VIEW_MAIN %}
+			<input class="button1" type="submit" id="add_ribbon" name="add_ribbon" value="{{ lang('ACP_LCPD_ADD_RIBBON') }}" />
+		{% endif %}
+		{{ S_FORM_TOKEN }}
+	</fieldset>
+
+</form>
+
+<script type="text/javascript">
+// <![CDATA[
+document.addEventListener('DOMContentLoaded', function() {
+	var links = document.querySelectorAll('.lcpd-ribbon-edit-category');
+	if (!links.length) {
+		return;
+	}
+	var idInput = document.getElementById('edit_ribbon_category_id');
+	var nameInput = document.getElementById('edit_ribbon_category_name');
+	var submitBtn = document.getElementById('lcpd_edit_ribbon_category_submit');
+	for (var i = 0; i < links.length; i++) {
+		links[i].addEventListener('click', function(e) {
+			e.preventDefault();
+			if (!idInput || !nameInput || !submitBtn) {
+				return;
+			}
+			var catId = this.getAttribute('data-cat-id');
+			var catName = this.getAttribute('data-cat-name') || '';
+			var newName = window.prompt('分类名称', catName);
+			if (newName === null) {
+				return;
+			}
+			newName = newName.replace(/^\s+|\s+$/g, '');
+			if (!newName.length) {
+				return;
+			}
+			idInput.value = catId;
+			nameInput.value = newName;
+			submitBtn.click();
+		});
+	}
+});
+// ]]>
+</script>
+
+{% include 'overall_footer.html' %}

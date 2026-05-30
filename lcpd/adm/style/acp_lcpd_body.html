@@ -1,0 +1,226 @@
+{% include 'overall_header.html' %}
+
+<h1>{{ lang('ACP_LCPD_TITLE') }}</h1>
+
+{% if S_ERROR %}
+	<div class="errorbox">
+		<h3>{{ lang('WARNING') }}</h3>
+		<p>{{ ERROR_MSG }}</p>
+	</div>
+{% endif %}
+
+<form id="siwode_lcpd_acp" name="siwode_lcpd_acp" method="post" action="{{ U_ACTION }}">
+
+	{# Index view: show simple submenu like phpBB module list #}
+	{% if S_LCPD_VIEW_INDEX %}
+		<fieldset class="tabulated">
+			<legend>{{ lang('ACP_LCPD_SHIELD_MANAGE') }}</legend>
+			<table class="table1 zebra-table">
+				<tbody>
+					<tr>
+						<td style="width:5%; text-align:center;"><img src="images/icon_subfolder.gif" alt="" /></td>
+						<td><a href="{{ U_LCPD_VIEW_CATEGORIES }}">{{ lang('ACP_LCPD_CATEGORY_MANAGE') }}</a><br /><span>{{ lang('ACP_LCPD_CATEGORY_EXPLAIN') }}</span></td>
+					</tr>
+					<tr>
+						<td style="width:5%; text-align:center;"><img src="images/icon_subfolder.gif" alt="" /></td>
+						<td><a href="{{ U_LCPD_VIEW_SHIELDS }}">{{ lang('ACP_LCPD_SHIELD_MANAGE') }}</a><br /><span>{{ lang('ACP_LCPD_SHIELD_EXPLAIN') }}</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+	{% endif %}
+
+	{# Categories management view #}
+	{% if S_LCPD_VIEW_CATEGORIES %}
+		<fieldset>
+			<legend>{{ lang('ACP_LCPD_CATEGORY_MANAGE') }}</legend>
+			<p>{{ lang('ACP_LCPD_CATEGORY_EXPLAIN') }}</p>
+
+			<table class="table1 zebra-table" id="category-list">
+				<thead>
+					<tr>
+						<th>{{ lang('ACP_LCPD_CATEGORY_NAME') }}</th>
+						<th>{{ lang('ACTIONS') }}</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for cat in categories %}
+					<tr>
+						<td>{{ cat.CATEGORY_NAME }}</td>
+						<td style="text-align: center;">
+							<a href="#" class="lcpd-edit-category" data-cat-id="{{ cat.CATEGORY_ID }}" data-cat-name="{{ cat.CATEGORY_NAME }}" title="{{ lang('EDIT') }}">{{ ICON_EDIT }}</a>&nbsp;
+							<button class="button2" type="submit" name="delete_category" value="{{ cat.CATEGORY_ID }}" title="{{ lang('DELETE') }}">{{ ICON_DELETE }}</button>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="2">{{ lang('ACP_LCPD_NO_CATEGORIES') }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</fieldset>
+
+		<fieldset class="quick" style="float: left;">
+			<input type="text" name="category_name_quick" maxlength="30" />
+			<input class="button2" name="add_category" type="submit" value="创建类别" />
+		</fieldset>
+		<div class="clearfix">&nbsp;</div>
+
+		<div style="display:none;">
+			<input type="hidden" id="edit_category_id" name="edit_category_id" value="" />
+			<input type="hidden" id="edit_category_name" name="edit_category_name" value="" />
+		</div>
+		<input type="submit" id="lcpd_edit_category_submit" name="edit_category" value="1" style="display:none;" />
+	{% endif %}
+
+	{# Shields management list + add view #}
+	{% if S_LCPD_VIEW_SHIELDS %}
+		<fieldset>
+			<legend>{{ lang('ACP_LCPD_SHIELD_MANAGE') }}</legend>
+			<p>{{ lang('ACP_LCPD_SHIELD_EXPLAIN') }}</p>
+
+			<table class="table1 zebra-table" id="shield-list">
+				<thead>
+					<tr>
+						<th>{{ lang('ACP_LCPD_SHIELD_NAME') }}</th>
+						<th>{{ lang('ACP_LCPD_CATEGORY_NAME') }}</th>
+						<th>{{ lang('ACP_LCPD_SHIELD_IMAGE') }}</th>
+						<th>{{ lang('ACTIONS') }}</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for shield in shields %}
+					<tr>
+						<td style="text-align: center;">{{ shield.SHIELD_NAME }}</td>
+						<td style="text-align: center;">{{ shield.CATEGORY_NAME }}</td>
+						<td style="text-align: center;">
+							{% if shield.SHIELD_IMAGE %}
+								<img src="{{ shield.SHIELD_IMAGE_URL }}" alt="{{ shield.SHIELD_NAME }}" style="max-height:200px;" />
+							{% else %}&nbsp;-&nbsp;{% endif %}
+						</td>
+						<td style="text-align: center;">
+							<a href="{{ U_ACTION }}&view=shield_edit&edit_shield_id={{ shield.SHIELD_ID }}#edit-shield-form" title="{{ lang('EDIT') }}">{{ ICON_EDIT }}</a>&nbsp;
+							<button class="button2" type="submit" name="delete_shield" value="{{ shield.SHIELD_ID }}" title="{{ lang('DELETE') }}">{{ ICON_DELETE }}</button>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">{{ lang('ACP_LCPD_NO_SHIELDS') }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</fieldset>
+		
+		<fieldset>
+			<legend>{{ lang('ACP_LCPD_ADD_SHIELD') }}</legend>
+			<dl>
+				<dt><label for="shield_name">{{ lang('ACP_LCPD_SHIELD_NAME') ~ lang('COLON') }}</label></dt>
+				<dd><input type="text" id="shield_name" name="shield_name" value="{{ SHIELD_NAME }}" maxlength="255" /></dd>
+			</dl>
+			<dl>
+				<dt><label for="category_id">{{ lang('ACP_LCPD_CATEGORY_NAME') ~ lang('COLON') }}</label></dt>
+				<dd>
+					<select id="category_id" name="category_id">
+						<option value="">{{ lang('SELECT_OPTION') }}</option>
+						{% for cat in categories %}
+							<option value="{{ cat.CATEGORY_ID }}"{% if cat.CATEGORY_ID == CATEGORY_ID %} selected="selected"{% endif %}>{{ cat.CATEGORY_NAME }}</option>
+						{% endfor %}
+					</select>
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="shield_image">{{ lang('ACP_LCPD_SHIELD_IMAGE') ~ lang('COLON') }}</label></dt>
+				<dd>
+					<select id="shield_image" name="shield_image">
+						<option value="">{{ lang('SELECT_OPTION') }}</option>
+						{% for img in shield_images %}
+							<option value="{{ img.FILE }}"{% if img.FILE == SHIELD_IMAGE %} selected="selected"{% endif %}>{{ img.FILE }}</option>
+						{% endfor %}
+					</select>
+				</dd>
+			</dl>
+		</fieldset>
+	{% endif %}
+
+	{# Single Shield edit view #}
+	{% if S_LCPD_VIEW_SHIELD_EDIT %}
+		<fieldset id="edit-shield-form">
+			<legend>{{ lang('ACP_LCPD_EDIT_SHIELD') }}</legend>
+			<dl>
+				<dt><label for="edit_shield_id">{{ lang('ACP_LCPD_SHIELD_NAME') ~ lang('COLON') }}</label></dt>
+				<dd>
+					<select id="edit_shield_id" name="edit_shield_id">
+						<option value="">{{ lang('SELECT_OPTION') }}</option>
+						{% for shield in shields %}
+							<option value="{{ shield.SHIELD_ID }}"{% if shield.SHIELD_ID == EDIT_SHIELD_ID %} selected="selected"{% endif %}>{{ shield.SHIELD_NAME }}</option>
+						{% endfor %}
+					</select>
+				</dd>
+			</dl>
+			<dl>
+				<dt><label for="edit_shield_name">{{ lang('ACP_LCPD_SHIELD_NAME') ~ lang('COLON') }}</label></dt>
+				<dd><input type="text" id="edit_shield_name" name="edit_shield_name" value="{{ EDIT_SHIELD_NAME }}" maxlength="255" /></dd>
+			</dl>
+			<dl>
+				<dt><label for="edit_shield_image">{{ lang('ACP_LCPD_SHIELD_IMAGE') ~ lang('COLON') }}</label></dt>
+				<dd>
+					<select id="edit_shield_image" name="edit_shield_image">
+						<option value="">{{ lang('SELECT_OPTION') }}</option>
+						{% for img in shield_images %}
+							<option value="{{ img.FILE }}"{% if img.FILE == EDIT_SHIELD_IMAGE %} selected="selected"{% endif %}>{{ img.FILE }}</option>
+						{% endfor %}
+					</select>
+				</dd>
+			</dl>
+			<p class="submit-buttons">
+				<input class="button1" type="submit" name="edit_shield" value="{{ lang('ACP_LCPD_EDIT_SHIELD') }}" />
+			</p>
+		</fieldset>
+	{% endif %}
+
+	<fieldset class="submit-buttons">
+		{% if S_LCPD_VIEW_SHIELDS %}
+			<input class="button1" type="submit" id="add_shield" name="add_shield" value="{{ lang('ACP_LCPD_ADD_SHIELD') }}" />
+		{% endif %}
+		{{ S_FORM_TOKEN }}
+	</fieldset>
+
+</form>
+
+<script type="text/javascript">
+// <![CDATA[
+document.addEventListener('DOMContentLoaded', function() {
+	// Category inline edit
+	var catLinks = document.querySelectorAll('.lcpd-edit-category');
+	var catIdInput = document.getElementById('edit_category_id');
+	var catNameInput = document.getElementById('edit_category_name');
+	var catSubmitBtn = document.getElementById('lcpd_edit_category_submit');
+	for (var i = 0; i < catLinks.length; i++) {
+		catLinks[i].addEventListener('click', function(e) {
+			e.preventDefault();
+			if (!catIdInput || !catNameInput || !catSubmitBtn) {
+				return;
+			}
+			var catId = this.getAttribute('data-cat-id');
+			var catName = this.getAttribute('data-cat-name') || '';
+			var newName = window.prompt('分类名称', catName);
+			if (newName === null) {
+				return;
+			}
+			newName = newName.replace(/^\s+|\s+$/g, '');
+			if (!newName.length) {
+				return;
+			}
+			catIdInput.value = catId;
+			catNameInput.value = newName;
+			catSubmitBtn.click();
+		});
+	}
+});
+// ]]>
+</script>
+
+{% include 'overall_footer.html' %}
+

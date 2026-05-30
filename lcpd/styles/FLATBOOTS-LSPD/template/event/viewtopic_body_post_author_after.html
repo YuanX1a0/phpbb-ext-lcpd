@@ -1,0 +1,33 @@
+<!-- IF postrow.S_LCPD_BADGES and postrow.S_LCPD_ACTIVE -->
+<div class="lcpd-badge-wrap" style="{postrow.LCPD_WRAP_STYLE}">
+	<!-- IF postrow.S_LCPD_SHOW_SHIELD -->
+	<div class="shieldboard" style="margin:0;width:auto;">
+		<div class="shield" style="{postrow.LCPD_SHIELD_WRAP_STYLE}">
+			<!-- IF postrow.LCPD_SHIELD_IMG_SRC -->
+				<img class="shield-img" src="{postrow.LCPD_SHIELD_IMG_SRC}" alt="{postrow.LCPD_SHIELD_NAME}" style="{postrow.LCPD_SHIELD_IMG_STYLE}" />
+				<!-- IF postrow.LCPD_BADGE_NUMBER -->
+					<span class="lcpd-shield-number" style="{postrow.LCPD_BADGE_NUMBER_STYLE}">{postrow.LCPD_BADGE_NUMBER}</span>
+				<!-- ENDIF -->
+			<!-- ENDIF -->
+		</div>
+	</div>
+	<!-- ENDIF -->
+
+	<!-- IF postrow.S_LCPD_SHOW_NAMEBAR -->
+	<div class="namebar" style="{postrow.LCPD_NAMEBAR_WRAP_STYLE}">
+		<!-- IF postrow.LCPD_NAMEBAR_IMG_SRC -->
+			<img class="name" src="{postrow.LCPD_NAMEBAR_IMG_SRC}" alt="{postrow.LCPD_NAMEBAR_NAME}" style="{postrow.LCPD_NAMEBAR_IMG_STYLE}" />
+		<!-- ENDIF -->
+		<span class="printedname" style="{postrow.LCPD_NAMEBAR_TEXT_STYLE}">{postrow.LCPD_BADGE_NAME}</span>
+	</div>
+	<!-- ENDIF -->
+
+	<!-- IF postrow.S_LCPD_SHOW_RIBBONS -->
+	<div class="ribbons">
+		<!-- BEGIN postrow.lcpd_post_ribbons -->
+			<img class="ribbon-img" id="r{postrow.lcpd_post_ribbons.INDEX}" src="{postrow.lcpd_post_ribbons.IMG_SRC}" alt="{postrow.lcpd_post_ribbons.NAME}" style="{postrow.lcpd_post_ribbons.IMG_STYLE}" />
+		<!-- END postrow.lcpd_post_ribbons -->
+	</div>
+	<!-- ENDIF -->
+</div>
+<!-- ENDIF -->

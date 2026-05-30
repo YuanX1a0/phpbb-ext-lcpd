@@ -1,0 +1,122 @@
+/**
+ * LSPD badge display sizing (siwode/lcpd)
+ */
+.lcpd-badge-wrap {
+	max-width: var(--lcpd-wrap-max-width, 160px) !important;
+	margin: var(--lcpd-wrap-margin-v, 4px) auto !important;
+	overflow: hidden !important;
+	line-height: 1.2;
+	box-sizing: border-box !important;
+	width: auto !important;
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+}
+
+.lcpd-badge-wrap .shieldboard {
+	margin: 0 !important;
+	width: auto !important;
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+}
+
+.lcpd-badge-wrap .shieldboard .shield {
+	position: relative !important;
+	display: inline-block !important;
+	line-height: 0 !important;
+}
+
+.lcpd-badge-wrap .shieldboard .shield img,
+.lcpd-badge-wrap .shield-img {
+	display: block !important;
+	max-width: var(--lcpd-shield-max-width, 48px) !important;
+	max-height: var(--lcpd-shield-max-height, 48px) !important;
+	width: auto !important;
+	height: auto !important;
+}
+
+.lcpd-badge-wrap .shieldboard .shield .lcpd-shield-number,
+.lcpd-badge-wrap .lcpd-shield-number {
+	position: absolute !important;
+	top: var(--lcpd-badge-number-top-pct, 58%) !important;
+	left: var(--lcpd-badge-number-left-pct, 50%) !important;
+	transform: translate(-50%, -50%) !important;
+	font-size: var(--lcpd-badge-number-font-size, 17px) !important;
+	color: #22255B !important;
+	font-family: Arial, Helvetica, sans-serif !important;
+	font-weight: bold !important;
+	text-transform: uppercase !important;
+	text-align: center !important;
+	line-height: 1 !important;
+	white-space: nowrap !important;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .5) !important;
+	pointer-events: none !important;
+	z-index: 2 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.lcpd-badge-wrap .ribbons {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	justify-content: center !important;
+	align-items: center !important;
+	gap: var(--lcpd-ribbon-gap, 2px) !important;
+	margin-top: 2px !important;
+	line-height: 0;
+	width: auto !important;
+}
+
+.lcpd-badge-wrap .ribbons img,
+.lcpd-badge-wrap .ribbon-img {
+	display: block !important;
+	max-width: var(--lcpd-ribbon-max-width, 28px) !important;
+	max-height: var(--lcpd-ribbon-max-height, 20px) !important;
+	width: auto !important;
+	height: auto !important;
+}
+
+.lcpd-badge-wrap .namebar {
+	position: relative !important;
+	right: auto !important;
+	display: inline-block !important;
+	max-width: var(--lcpd-namebar-wrap-max-width, 140px) !important;
+	margin: 2px 0 !important;
+	width: auto !important;
+	line-height: 0 !important;
+}
+
+.lcpd-badge-wrap .namebar img,
+.lcpd-badge-wrap .namebar img.name {
+	display: block !important;
+	max-width: var(--lcpd-namebar-img-max-width, 120px) !important;
+	max-height: var(--lcpd-namebar-img-max-height, 22px) !important;
+	width: auto !important;
+	height: auto !important;
+}
+
+.lcpd-badge-wrap .namebar .printedname {
+	position: absolute !important;
+	top: var(--lcpd-namebar-text-top-pct, 50%) !important;
+	left: var(--lcpd-namebar-text-left-pct, 50%) !important;
+	transform: translate(-50%, -50%) !important;
+	display: block !important;
+	width: 92% !important;
+	max-width: 100% !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	text-align: center !important;
+	line-height: 1.2 !important;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	pointer-events: none !important;
+	z-index: 1 !important;
+	font-size: var(--lcpd-text-font-size, 16px) !important;
+	color: #000 !important;
+	font-weight: bold !important;
+	font-family: Arial, Helvetica, sans-serif !important;
+	text-transform: uppercase !important;
+}

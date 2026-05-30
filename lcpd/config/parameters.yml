@@ -1,0 +1,9 @@
+parameters:
+    siwode.lcpd.tables.lcpd_table: '%core.table_prefix%siwode_lcpd_table'
+    siwode.lcpd.tables.shields: '%core.table_prefix%siwode_lcpd_shields'
+    siwode.lcpd.tables.shield_categories: '%core.table_prefix%siwode_lcpd_shield_categories'
+    siwode.lcpd.tables.ribbons: '%core.table_prefix%siwode_lcpd_ribbons'
+    siwode.lcpd.tables.ribbon_categories: '%core.table_prefix%siwode_lcpd_ribbon_categories'
+    siwode.lcpd.tables.namebars: '%core.table_prefix%siwode_lcpd_namebars'
+    siwode.lcpd.tables.namebar_categories: '%core.table_prefix%siwode_lcpd_namebar_categories'
+    siwode.lcpd.tables.user_ribbons: '%core.table_prefix%siwode_lcpd_user_ribbons'

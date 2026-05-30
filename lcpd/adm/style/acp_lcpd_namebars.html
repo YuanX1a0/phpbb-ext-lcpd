@@ -1,0 +1,211 @@
+{% include 'overall_header.html' %}
+
+<h1>{{ lang('ACP_LCPD_NAMEBAR_MODULE') }}</h1>
+
+{% if S_ERROR %}
+	<div class="errorbox">
+		<h3>{{ lang('WARNING') }}</h3>
+		<p>{{ ERROR_MSG }}</p>
+	</div>
+{% endif %}
+
+<form id="siwode_lcpd_namebars" name="siwode_lcpd_namebars" method="post" action="{{ U_ACTION }}">
+
+	{# Index view: simple submenu like Shield #}
+	{% if S_LCPD_NAMEBARS_VIEW_INDEX %}
+		<fieldset class="tabulated">
+			<legend>{{ lang('ACP_LCPD_NAMEBAR_MODULE') }}</legend>
+			<table class="table1 zebra-table">
+				<tbody>
+					<tr>
+						<td style="width:5%; text-align:center;"><img src="images/icon_subfolder.gif" alt="" /></td>
+						<td><a href="{{ U_LCPD_NAMEBARS_VIEW_CATEGORIES }}">{{ lang('ACP_LCPD_NAMEBAR_CATEGORY_MANAGE') }}</a><br /><span>{{ lang('ACP_LCPD_NAMEBAR_CATEGORY_EXPLAIN') }}</span></td>
+					</tr>
+					<tr>
+						<td style="width:5%; text-align:center;"><img src="images/icon_subfolder.gif" alt="" /></td>
+						<td><a href="{{ U_LCPD_NAMEBARS_VIEW_MAIN }}">{{ lang('ACP_LCPD_NAMEBAR_MANAGE') }}</a><br /><span>{{ lang('ACP_LCPD_NAMEBAR_EXPLAIN') }}</span></td>
+					</tr>
+				</tbody>
+			</table>
+		</fieldset>
+	{% endif %}
+
+	{# Categories management view #}
+	{% if S_LCPD_NAMEBARS_VIEW_CATEGORIES %}
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_NAMEBAR_CATEGORY_MANAGE') }}</legend>
+		<p>{{ lang('ACP_LCPD_NAMEBAR_CATEGORY_EXPLAIN') }}</p>
+
+		<table class="table1 zebra-table" id="namebar-category-list">
+			<thead>
+				<tr>
+					<th>{{ lang('ACP_LCPD_CATEGORY_NAME') }}</th>
+					<th>{{ lang('ACTIONS') }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for cat in namebar_categories %}
+				<tr>
+					<td>{{ cat.CATEGORY_NAME }}</td>
+					<td style="text-align: center;">
+						<button class="button2" type="submit" name="delete_namebar_category" value="{{ cat.CATEGORY_ID }}" title="{{ lang('DELETE') }}">{{ ICON_DELETE }}</button>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="2">{{ lang('ACP_LCPD_NO_NAMEBAR_CATEGORIES') }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_ADD_NAMEBAR_CATEGORY') }}</legend>
+		<dl>
+			<dt><label for="namebar_category_name">{{ lang('ACP_LCPD_CATEGORY_NAME') ~ lang('COLON') }}</label></dt>
+			<dd><input type="text" id="namebar_category_name" name="namebar_category_name" value="{{ NAMEBAR_CATEGORY_NAME }}" maxlength="255" /></dd>
+		</dl>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="add_namebar_category" name="add_namebar_category" value="{{ lang('ACP_LCPD_ADD_NAMEBAR_CATEGORY') }}" />
+		</p>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_EDIT_NAMEBAR_CATEGORY') }}</legend>
+		<dl>
+			<dt><label for="edit_namebar_category_id">{{ lang('ACP_LCPD_CATEGORY_NAME') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<select id="edit_namebar_category_id" name="edit_namebar_category_id">
+					<option value="">{{ lang('SELECT_OPTION') }}</option>
+					{% for cat in namebar_categories %}
+						<option value="{{ cat.CATEGORY_ID }}">{{ cat.CATEGORY_NAME }}</option>
+					{% endfor %}
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="edit_namebar_category_name">{{ lang('ACP_LCPD_CATEGORY_NAME') ~ lang('COLON') }}</label></dt>
+			<dd><input type="text" id="edit_namebar_category_name" name="edit_namebar_category_name" value="" maxlength="255" /></dd>
+		</dl>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" name="edit_namebar_category" value="{{ lang('ACP_LCPD_EDIT_NAMEBAR_CATEGORY') }}" />
+		</p>
+	</fieldset>
+	{% endif %}
+
+	{# Namebars list + add view #}
+	{% if S_LCPD_NAMEBARS_VIEW_MAIN %}
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_NAMEBAR_MANAGE') }}</legend>
+		<p>{{ lang('ACP_LCPD_NAMEBAR_EXPLAIN') }}</p>
+
+		<table class="table1 zebra-table" id="namebar-list">
+			<thead>
+				<tr>
+					<th>{{ lang('ACP_LCPD_NAMEBAR_NAME') }}</th>
+					<th>{{ lang('ACP_LCPD_CATEGORY_NAME') }}</th>
+					<th>{{ lang('ACP_LCPD_NAMEBAR_IMAGE') }}</th>
+					<th>{{ lang('ACTIONS') }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for namebar in namebars %}
+				<tr>
+					<td style="text-align: center;">{{ namebar.NAMEBAR_NAME }}</td>
+					<td style="text-align: center;">{{ namebar.CATEGORY_NAME }}</td>
+					<td style="text-align: center;">
+						{% if namebar.NAMEBAR_IMAGE %}
+							<img src="{{ namebar.NAMEBAR_IMAGE_URL }}" alt="{{ namebar.NAMEBAR_NAME }}" style="max-height:32px;" />
+						{% else %}&nbsp;-&nbsp;{% endif %}
+					</td>
+					<td style="text-align: center;">
+						<a href="{{ U_ACTION }}&view=namebar_edit&edit_namebar_id={{ namebar.NAMEBAR_ID }}#edit-namebar-form" title="{{ lang('EDIT') }}">{{ ICON_EDIT }}</a>&nbsp;
+						<button class="button2" type="submit" name="delete_namebar" value="{{ namebar.NAMEBAR_ID }}" title="{{ lang('DELETE') }}">{{ ICON_DELETE }}</button>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">{{ lang('ACP_LCPD_NO_NAMEBARS') }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_ADD_NAMEBAR') }}</legend>
+		<dl>
+			<dt><label for="namebar_name">{{ lang('ACP_LCPD_NAMEBAR_NAME') ~ lang('COLON') }}</label></dt>
+			<dd><input type="text" id="namebar_name" name="namebar_name" value="{{ NAMEBAR_NAME }}" maxlength="255" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="namebar_category_id">{{ lang('ACP_LCPD_CATEGORY_NAME') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<select id="namebar_category_id" name="namebar_category_id">
+					<option value="">{{ lang('SELECT_OPTION') }}</option>
+					{% for cat in namebar_categories %}
+						<option value="{{ cat.CATEGORY_ID }}"{% if cat.CATEGORY_ID == NAMEBAR_CATEGORY_ID %} selected="selected"{% endif %}>{{ cat.CATEGORY_NAME }}</option>
+					{% endfor %}
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="namebar_image">{{ lang('ACP_LCPD_NAMEBAR_IMAGE') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<select id="namebar_image" name="namebar_image">
+					<option value="">{{ lang('SELECT_OPTION') }}</option>
+					{% for img in namebar_images %}
+						<option value="{{ img.FILE }}"{% if img.FILE == NAMEBAR_IMAGE %} selected="selected"{% endif %}>{{ img.FILE }}</option>
+					{% endfor %}
+				</select>
+			</dd>
+		</dl>
+	</fieldset>
+	{% endif %}
+
+	{% if S_LCPD_NAMEBARS_VIEW_EDIT %}
+	<fieldset id="edit-namebar-form">
+		<legend>{{ lang('ACP_LCPD_EDIT_NAMEBAR') }}</legend>
+		<dl>
+			<dt><label for="edit_namebar_id">{{ lang('ACP_LCPD_NAMEBAR_NAME') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<select id="edit_namebar_id" name="edit_namebar_id">
+					<option value="">{{ lang('SELECT_OPTION') }}</option>
+					{% for namebar in namebars %}
+						<option value="{{ namebar.NAMEBAR_ID }}"{% if namebar.NAMEBAR_ID == EDIT_NAMEBAR_ID %} selected="selected"{% endif %}>{{ namebar.NAMEBAR_NAME }}</option>
+					{% endfor %}
+				</select>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="edit_namebar_name">{{ lang('ACP_LCPD_NAMEBAR_NAME') ~ lang('COLON') }}</label></dt>
+			<dd><input type="text" id="edit_namebar_name" name="edit_namebar_name" value="{{ EDIT_NAMEBAR_NAME }}" maxlength="255" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="edit_namebar_image">{{ lang('ACP_LCPD_NAMEBAR_IMAGE') ~ lang('COLON') }}</label></dt>
+			<dd>
+				<select id="edit_namebar_image" name="edit_namebar_image">
+					<option value="">{{ lang('SELECT_OPTION') }}</option>
+					{% for img in namebar_images %}
+						<option value="{{ img.FILE }}"{% if img.FILE == EDIT_NAMEBAR_IMAGE %} selected="selected"{% endif %}>{{ img.FILE }}</option>
+					{% endfor %}
+				</select>
+			</dd>
+		</dl>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" name="edit_namebar" value="{{ lang('ACP_LCPD_EDIT_NAMEBAR') }}" />
+		</p>
+	</fieldset>
+	{% endif %}
+
+	<fieldset class="submit-buttons">
+		{% if S_LCPD_NAMEBARS_VIEW_MAIN %}
+			<input class="button1" type="submit" id="add_namebar" name="add_namebar" value="{{ lang('ACP_LCPD_ADD_NAMEBAR') }}" />
+		{% endif %}
+		{{ S_FORM_TOKEN }}
+	</fieldset>
+
+</form>
+
+{% include 'overall_footer.html' %}

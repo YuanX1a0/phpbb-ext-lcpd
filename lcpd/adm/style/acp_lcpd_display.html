@@ -1,0 +1,110 @@
+{% include 'overall_header.html' %}
+
+<h1>{{ lang('ACP_LCPD_DISPLAY_MODULE') }}</h1>
+<p>{{ lang('ACP_LCPD_DISPLAY_EXPLAIN') }}</p>
+
+{% if S_ERROR %}
+	<div class="errorbox">
+		<h3>{{ lang('WARNING') }}</h3>
+		<p>{{ ERROR_MSG }}</p>
+	</div>
+{% endif %}
+
+<form id="siwode_lcpd_display" name="siwode_lcpd_display" method="post" action="{{ U_ACTION }}">
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_DISPLAY_GENERAL') }}</legend>
+		<dl>
+			<dt><label for="lcpd_wrap_max_width">{{ lang('ACP_LCPD_DISPLAY_WRAP_MAX_WIDTH') ~ lang('COLON') }}</label><br /><span>{{ lang('ACP_LCPD_DISPLAY_WRAP_MAX_WIDTH_EXPLAIN') }}</span></dt>
+			<dd><input type="number" id="lcpd_wrap_max_width" name="lcpd_wrap_max_width" value="{{ LCPD_WRAP_MAX_WIDTH }}" min="40" max="500" /> px</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_wrap_margin_v">{{ lang('ACP_LCPD_DISPLAY_WRAP_MARGIN_V') ~ lang('COLON') }}</label><br /><span>{{ lang('ACP_LCPD_DISPLAY_WRAP_MARGIN_V_EXPLAIN') }}</span></dt>
+			<dd><input type="number" id="lcpd_wrap_margin_v" name="lcpd_wrap_margin_v" value="{{ LCPD_WRAP_MARGIN_V }}" min="0" max="50" /> px</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_DISPLAY_SHIELD') }}</legend>
+		<dl>
+			<dt><label for="lcpd_shield_max_width">{{ lang('ACP_LCPD_DISPLAY_SHIELD_MAX_WIDTH') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_shield_max_width" name="lcpd_shield_max_width" value="{{ LCPD_SHIELD_MAX_WIDTH }}" min="8" max="300" /> px</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_shield_max_height">{{ lang('ACP_LCPD_DISPLAY_SHIELD_MAX_HEIGHT') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_shield_max_height" name="lcpd_shield_max_height" value="{{ LCPD_SHIELD_MAX_HEIGHT }}" min="8" max="300" /> px</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_DISPLAY_RIBBON') }}</legend>
+		<dl>
+			<dt><label for="lcpd_ribbon_max_width">{{ lang('ACP_LCPD_DISPLAY_RIBBON_MAX_WIDTH') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_ribbon_max_width" name="lcpd_ribbon_max_width" value="{{ LCPD_RIBBON_MAX_WIDTH }}" min="8" max="200" /> px</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_ribbon_max_height">{{ lang('ACP_LCPD_DISPLAY_RIBBON_MAX_HEIGHT') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_ribbon_max_height" name="lcpd_ribbon_max_height" value="{{ LCPD_RIBBON_MAX_HEIGHT }}" min="8" max="200" /> px</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_ribbon_gap">{{ lang('ACP_LCPD_DISPLAY_RIBBON_GAP') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_ribbon_gap" name="lcpd_ribbon_gap" value="{{ LCPD_RIBBON_GAP }}" min="0" max="20" /> px</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_DISPLAY_NAMEBAR') }}</legend>
+		<dl>
+			<dt><label for="lcpd_namebar_wrap_max_width">{{ lang('ACP_LCPD_DISPLAY_NAMEBAR_WRAP_MAX_WIDTH') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_namebar_wrap_max_width" name="lcpd_namebar_wrap_max_width" value="{{ LCPD_NAMEBAR_WRAP_MAX_WIDTH }}" min="40" max="500" /> px</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_namebar_img_max_width">{{ lang('ACP_LCPD_DISPLAY_NAMEBAR_IMG_MAX_WIDTH') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_namebar_img_max_width" name="lcpd_namebar_img_max_width" value="{{ LCPD_NAMEBAR_IMG_MAX_WIDTH }}" min="20" max="400" /> px</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_namebar_img_max_height">{{ lang('ACP_LCPD_DISPLAY_NAMEBAR_IMG_MAX_HEIGHT') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_namebar_img_max_height" name="lcpd_namebar_img_max_height" value="{{ LCPD_NAMEBAR_IMG_MAX_HEIGHT }}" min="8" max="200" /> px</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_DISPLAY_TEXT') }}</legend>
+		<dl>
+			<dt><label for="lcpd_text_font_size">{{ lang('ACP_LCPD_DISPLAY_TEXT_FONT_SIZE') ~ lang('COLON') }}</label><br /><span>{{ lang('ACP_LCPD_DISPLAY_TEXT_FONT_SIZE_EXPLAIN') }}</span></dt>
+			<dd><input type="number" id="lcpd_text_font_size" name="lcpd_text_font_size" value="{{ LCPD_TEXT_FONT_SIZE }}" min="6" max="36" /> px</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset>
+		<legend>{{ lang('ACP_LCPD_DISPLAY_POSITION') }}</legend>
+		<p>{{ lang('ACP_LCPD_DISPLAY_POSITION_EXPLAIN') }}</p>
+		<dl>
+			<dt><label for="lcpd_badge_number_top_pct">{{ lang('ACP_LCPD_DISPLAY_BADGE_NUMBER_TOP_PCT') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_badge_number_top_pct" name="lcpd_badge_number_top_pct" value="{{ LCPD_BADGE_NUMBER_TOP_PCT }}" min="0" max="100" /> %</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_badge_number_left_pct">{{ lang('ACP_LCPD_DISPLAY_BADGE_NUMBER_LEFT_PCT') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_badge_number_left_pct" name="lcpd_badge_number_left_pct" value="{{ LCPD_BADGE_NUMBER_LEFT_PCT }}" min="0" max="100" /> %</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_badge_number_font_size">{{ lang('ACP_LCPD_DISPLAY_BADGE_NUMBER_FONT_SIZE') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_badge_number_font_size" name="lcpd_badge_number_font_size" value="{{ LCPD_BADGE_NUMBER_FONT_SIZE }}" min="6" max="36" /> px</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_namebar_text_top_pct">{{ lang('ACP_LCPD_DISPLAY_NAMEBAR_TEXT_TOP_PCT') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_namebar_text_top_pct" name="lcpd_namebar_text_top_pct" value="{{ LCPD_NAMEBAR_TEXT_TOP_PCT }}" min="0" max="100" /> %</dd>
+		</dl>
+		<dl>
+			<dt><label for="lcpd_namebar_text_left_pct">{{ lang('ACP_LCPD_DISPLAY_NAMEBAR_TEXT_LEFT_PCT') ~ lang('COLON') }}</label></dt>
+			<dd><input type="number" id="lcpd_namebar_text_left_pct" name="lcpd_namebar_text_left_pct" value="{{ LCPD_NAMEBAR_TEXT_LEFT_PCT }}" min="0" max="100" /> %</dd>
+		</dl>
+	</fieldset>
+
+	<fieldset class="submit-buttons">
+		<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+		<input class="button2" type="submit" id="reset_defaults" name="reset_defaults" value="{{ lang('ACP_LCPD_DISPLAY_RESET_DEFAULTS') }}" />
+		{{ S_FORM_TOKEN }}
+	</fieldset>
+</form>
+
+{% include 'overall_footer.html' %}

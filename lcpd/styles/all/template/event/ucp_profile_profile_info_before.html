@@ -1,0 +1,78 @@
+<!-- IF S_LCPD_HAS_UCP_DISPLAY -->
+<dl>
+	<dt>{L_UCP_LCPD_DISPLAY}{L_COLON}<br /><span>{L_UCP_LCPD_DISPLAY_EXPLAIN}</span></dt>
+	<dd>
+		<!-- IF S_LCPD_UCP_HAS_SHIELD -->
+		<label for="user_lcpd_show_shield">
+			<input type="checkbox" name="user_lcpd_show_shield" id="user_lcpd_show_shield" value="1"<!-- IF USER_LCPD_SHOW_SHIELD --> checked="checked"<!-- ENDIF --> /> {L_UCP_LCPD_SHOW_SHIELD}
+		</label><br />
+		<!-- ENDIF -->
+		<!-- IF S_LCPD_UCP_HAS_RIBBONS -->
+		<label for="user_lcpd_show_ribbons">
+			<input type="checkbox" name="user_lcpd_show_ribbons" id="user_lcpd_show_ribbons" value="1"<!-- IF USER_LCPD_SHOW_RIBBONS --> checked="checked"<!-- ENDIF --> /> {L_UCP_LCPD_SHOW_RIBBONS}
+		</label><br />
+		<!-- ENDIF -->
+		<!-- IF S_LCPD_UCP_HAS_NAMEBAR -->
+		<label for="user_lcpd_show_namebar">
+			<input type="checkbox" name="user_lcpd_show_namebar" id="user_lcpd_show_namebar" value="1"<!-- IF USER_LCPD_SHOW_NAMEBAR --> checked="checked"<!-- ENDIF --> /> {L_UCP_LCPD_SHOW_NAMEBAR}
+		</label>
+		<!-- ENDIF -->
+	</dd>
+</dl>
+<!-- ENDIF -->
+
+<dl>
+	<dt><label for="user_lcpd_badge_number">{L_UCP_LCPD_BADGE_NUMBER}{L_COLON}</label><br /><span>{L_UCP_LCPD_BADGE_NUMBER_EXPLAIN}</span></dt>
+	<dd><input type="text" name="user_lcpd_badge_number" id="user_lcpd_badge_number" maxlength="64" value="{USER_LCPD_BADGE_NUMBER}" class="inputbox" /></dd>
+</dl>
+
+<!-- IF S_LCPD_HAS_UCP_RIBBONS -->
+<dl>
+	<dt><label>{L_UCP_LCPD_RIBBON_ORDER}{L_COLON}</label><br /><span>{L_UCP_LCPD_RIBBON_ORDER_EXPLAIN}</span></dt>
+	<dd>
+		<ol id="lcpd-ucp-ribbon-sort" class="lcpd-ucp-ribbon-sort">
+			<!-- BEGIN lcpd_ucp_ribbons -->
+			<li class="lcpd-ucp-ribbon-item">
+				<input type="hidden" name="user_lcpd_ribbon_ids[]" value="{lcpd_ucp_ribbons.ID}" />
+				<span class="lcpd-ucp-ribbon-name">{lcpd_ucp_ribbons.NAME}</span>
+				<span class="lcpd-ucp-ribbon-actions">
+					<input type="button" class="button2 lcpd-ribbon-up" value="{L_UCP_LCPD_RIBBON_MOVE_UP}" />
+					<input type="button" class="button2 lcpd-ribbon-down" value="{L_UCP_LCPD_RIBBON_MOVE_DOWN}" />
+				</span>
+			</li>
+			<!-- END lcpd_ucp_ribbons -->
+		</ol>
+	</dd>
+</dl>
+
+<script>
+(function() {
+	var list = document.getElementById('lcpd-ucp-ribbon-sort');
+	if (!list) { return; }
+
+	list.addEventListener('click', function(e) {
+		var target = e.target || e.srcElement;
+		if (!target || !target.className) { return; }
+
+		var item = target.parentNode;
+		while (item && item.className && item.className.indexOf('lcpd-ucp-ribbon-item') === -1) {
+			item = item.parentNode;
+		}
+
+		if (!item) { return; }
+
+		if (target.className.indexOf('lcpd-ribbon-up') !== -1) {
+			var prev = item.previousElementSibling;
+			if (prev) {
+				list.insertBefore(item, prev);
+			}
+		} else if (target.className.indexOf('lcpd-ribbon-down') !== -1) {
+			var next = item.nextElementSibling;
+			if (next) {
+				list.insertBefore(next, item);
+			}
+		}
+	});
+})();
+</script>
+<!-- ENDIF -->

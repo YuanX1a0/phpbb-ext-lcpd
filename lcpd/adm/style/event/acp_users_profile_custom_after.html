@@ -1,0 +1,119 @@
+<!-- IF S_PROFILE -->
+	<fieldset>
+		<legend>{L_ACP_LCPD_USER_BADGES}</legend>
+
+		<dl>
+			<dt><label for="user_lcpd_active">{L_ACP_LCPD_USER_ACTIVE}{L_COLON}</label></dt>
+			<dd>
+				<label>
+					<input type="checkbox" id="user_lcpd_active" name="user_lcpd_active" value="1"<!-- IF USER_LCPD_ACTIVE --> checked="checked"<!-- ENDIF --> /> {L_YES}
+				</label>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt><label for="user_lcpd_badge_number">{L_ACP_LCPD_USER_BADGE_NUMBER}{L_COLON}</label></dt>
+			<dd>
+				<input type="text" id="user_lcpd_badge_number" name="user_lcpd_badge_number" value="{USER_LCPD_BADGE_NUMBER}" />
+			</dd>
+		</dl>
+
+		<dl>
+			<dt><label for="user_lcpd_shield">{L_ACP_LCPD_USER_SHIELD}{L_COLON}</label></dt>
+			<dd>
+				<select id="user_lcpd_shield" name="user_lcpd_shield">
+					<!-- BEGIN lcpd_shields -->
+						<!-- IF lcpd_shields.IS_CATEGORY -->
+							<option value="0" style="font-weight: bold; color: #000;">{lcpd_shields.NAME}</option>
+						<!-- ELSE -->
+							<option value="{lcpd_shields.ID}"<!-- IF lcpd_shields.ID == USER_LCPD_SHIELD_ID --> selected="selected"<!-- ENDIF -->>&nbsp;&nbsp;&nbsp;{lcpd_shields.NAME}</option>
+						<!-- ENDIF -->
+					<!-- END lcpd_shields -->
+					<option value="0"<!-- IF not USER_LCPD_SHIELD_ID --> selected="selected"<!-- ENDIF -->>{L_ACP_LCPD_USER_NONE}</option>
+				</select>
+			</dd>
+		</dl>
+
+		<dl>
+			<dt><label for="user_lcpd_namebar">{L_ACP_LCPD_USER_NAMEBAR}{L_COLON}</label></dt>
+			<dd>
+				<select id="user_lcpd_namebar" name="user_lcpd_namebar">
+					<!-- BEGIN lcpd_namebars -->
+						<!-- IF lcpd_namebars.IS_CATEGORY -->
+							<option value="0" style="font-weight: bold; color: #000;">{lcpd_namebars.NAME}</option>
+						<!-- ELSE -->
+							<option value="{lcpd_namebars.ID}"<!-- IF lcpd_namebars.ID == USER_LCPD_NAMEBAR_ID --> selected="selected"<!-- ENDIF -->>&nbsp;&nbsp;&nbsp;{lcpd_namebars.NAME}</option>
+						<!-- ENDIF -->
+					<!-- END lcpd_namebars -->
+					<option value="0"<!-- IF not USER_LCPD_NAMEBAR_ID --> selected="selected"<!-- ENDIF -->>{L_ACP_LCPD_USER_NONE}</option>
+				</select>
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label>{L_ACP_LCPD_USER_RIBBON}{L_COLON}</label></dt>
+			<dd>
+				<div id="lcpd-ribbon-list" style="display: flex; flex-wrap: wrap; gap: 4px;">
+					<!-- BEGIN lcpd_user_ribbons -->
+						<div class="lcpd-ribbon-row" style="flex: 0 0 30%; box-sizing: border-box;">
+							<select name="user_lcpd_ribbon_ids[]" style="width: 100%;">
+								{lcpd_user_ribbons.OPTIONS}
+							</select>
+							<input type="button" class="button2 lcpd-remove-ribbon" value="删除" />
+						</div>
+					<!-- END lcpd_user_ribbons -->
+				</div>
+
+				<input type="button" id="add-lcpd-ribbon" class="button2" value="添加略章" />
+			</dd>
+		</dl>
+
+		<script>
+		(function() {
+			var list = document.getElementById('lcpd-ribbon-list');
+			if (!list) { return; }
+
+			var addBtn = document.getElementById('add-lcpd-ribbon');
+			if (addBtn) {
+				addBtn.addEventListener('click', function() {
+					var rows = list.getElementsByClassName('lcpd-ribbon-row');
+					if (!rows.length) { return; }
+
+					var clone = rows[0].cloneNode(true);
+					var selects = clone.getElementsByTagName('select');
+					if (selects.length) {
+						var select = selects[0];
+						for (var i = 0; i < select.options.length; i++) {
+							if (select.options[i].value == '0') {
+								select.selectedIndex = i;
+								break;
+							}
+						}
+					}
+
+					list.appendChild(clone);
+				});
+			}
+
+			list.addEventListener('click', function(e) {
+				var target = e.target || e.srcElement;
+				if (!target) { return; }
+
+				if (target.className && target.className.indexOf('lcpd-remove-ribbon') !== -1) {
+					var row = target.parentNode;
+					while (row && row.className && row.className.indexOf('lcpd-ribbon-row') === -1) {
+						row = row.parentNode;
+					}
+
+					if (!row) { return; }
+
+					var rows = list.getElementsByClassName('lcpd-ribbon-row');
+					if (rows.length > 1) {
+						list.removeChild(row);
+					}
+				}
+			});
+		})();
+		</script>
+	</fieldset>
+<!-- ENDIF -->

@@ -1,0 +1,75 @@
+/**
+ * Ravaio theme overrides for LCPD badges.
+ */
+.postprofile .lcpd-badge-wrap,
+.postauthor .lcpd-badge-wrap,
+.poster-info .lcpd-badge-wrap,
+.online .lcpd-badge-wrap,
+.post .lcpd-badge-wrap {
+	width: auto !important;
+	max-width: var(--lcpd-wrap-max-width, 160px) !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+}
+
+.postprofile .lcpd-badge-wrap .shieldboard,
+.postprofile .lcpd-badge-wrap .ribbons {
+	width: auto !important;
+	float: none !important;
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+}
+
+.postprofile .lcpd-badge-wrap .ribbons {
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	justify-content: center !important;
+}
+
+.postprofile .lcpd-badge-wrap img,
+.postauthor .lcpd-badge-wrap img,
+.poster-info .lcpd-badge-wrap img {
+	height: auto !important;
+	object-fit: contain !important;
+}
+
+.postprofile .lcpd-badge-wrap .shieldboard .shield img,
+.postprofile .lcpd-badge-wrap .shield-img {
+	max-width: var(--lcpd-shield-max-width, 48px) !important;
+	max-height: var(--lcpd-shield-max-height, 48px) !important;
+}
+
+.postprofile .lcpd-badge-wrap .ribbons img,
+.postprofile .lcpd-badge-wrap .ribbon-img {
+	max-width: var(--lcpd-ribbon-max-width, 28px) !important;
+	max-height: var(--lcpd-ribbon-max-height, 20px) !important;
+}
+
+.postprofile .lcpd-badge-wrap .namebar img,
+.postprofile .lcpd-badge-wrap .namebar img.name {
+	max-width: var(--lcpd-namebar-img-max-width, 120px) !important;
+	max-height: var(--lcpd-namebar-img-max-height, 22px) !important;
+}
+
+.postprofile .lcpd-badge-wrap .namebar,
+.postprofile .lcpd-badge-wrap .shieldboard .shield {
+	width: auto !important;
+	float: none !important;
+}
+
+.postprofile .lcpd-badge-wrap .namebar .printedname {
+	position: absolute !important;
+	transform: translate(-50%, -50%) !important;
+	text-align: center !important;
+	text-transform: uppercase !important;
+}
+
+.postprofile .lcpd-badge-wrap .lcpd-shield-number {
+	position: absolute !important;
+	transform: translate(-50%, -50%) !important;
+	text-align: center !important;
+}

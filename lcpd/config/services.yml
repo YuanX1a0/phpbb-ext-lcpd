@@ -1,0 +1,67 @@
+imports:
+    - { resource: parameters.yml }
+
+services:
+    siwode.lcpd.controller.main:
+        class: siwode\lcpd\controller\main_controller
+        arguments:
+            - '@config'
+            - '@controller.helper'
+            - '@template'
+            - '@language'
+
+    siwode.lcpd.controller.acp:
+        class: siwode\lcpd\controller\acp_controller
+        arguments:
+            - '@config'
+            - '@language'
+            - '@log'
+            - '@request'
+            - '@template'
+            - '@user'
+            - '@dbal.conn'
+            - '%siwode.lcpd.tables.shields%'
+            - '%siwode.lcpd.tables.shield_categories%'
+            - '%siwode.lcpd.tables.ribbons%'
+            - '%siwode.lcpd.tables.ribbon_categories%'
+            - '%siwode.lcpd.tables.namebars%'
+            - '%siwode.lcpd.tables.namebar_categories%'
+            - '@siwode.lcpd.display_settings'
+
+    siwode.lcpd.service:
+        class: siwode\lcpd\service
+        arguments:
+            - '@user'
+            - '%siwode.lcpd.tables.lcpd_table%'
+
+    siwode.lcpd.display_settings:
+        class: siwode\lcpd\service\display_settings
+        arguments:
+            - '@config'
+
+    siwode.lcpd.listener:
+        class: siwode\lcpd\event\main_listener
+        arguments:
+            - '@language'
+            - '@controller.helper'
+            - '@template'
+            - '@request'
+            - '@dbal.conn'
+            - '%siwode.lcpd.tables.shields%'
+            - '%siwode.lcpd.tables.ribbons%'
+            - '%siwode.lcpd.tables.namebars%'
+            - '%core.php_ext%'
+            - '%siwode.lcpd.tables.user_ribbons%'
+            - '@siwode.lcpd.display_settings'
+            - '@user'
+        tags:
+            - { name: event.listener }
+
+    siwode.lcpd.notification.type.sample:
+        class: siwode\lcpd\notification\type\sample
+        shared: false # service MUST not be shared for this to work!
+        parent: notification.type.base
+        calls:
+            - [set_controller_helper, ['@controller.helper']]
+        tags:
+            - { name: notification.type }

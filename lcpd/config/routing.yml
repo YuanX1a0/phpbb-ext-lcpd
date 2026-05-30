@@ -1,0 +1,3 @@
+siwode_lcpd_controller:
+    path: /demo/{name}
+    defaults: { _controller: siwode.lcpd.controller.main:handle }
